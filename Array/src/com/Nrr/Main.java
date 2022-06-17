@@ -22,6 +22,26 @@ public class Main {
         System.out.println(Arrays.toString(array1));
         System.out.println(Arrays.toString(array2));
         System.out.println(arrays.findMedianSortedArrays(array1, array2));*/
+//        Array array = new Array();
 
+       /* ListNode l1 = new ListNode(2);
+        ListNode l2 = new ListNode(3, l1);
+        ListNode l3 = new ListNode(4,l2);
+//        Array.LinkedList l2 = new Array.LinkedList();
+////        Array.LinkedList returnList = new Array.LinkedList();
+//        l1.val(2);
+//        l1.addLast(7);
+//        l1.addLast(2);
+//        l2.addLast(1);
+//        l2.addLast(6);
+//        l2.addLast(5);
+//        returnList = array.addTwoNumbers(l1, l2);
+        Solution sol = new Solution();
+        l3.print();*/
+        RemoveDuplicates removeDupli = new RemoveDuplicates();
+//        int arr[] = {1, 1, 2, 4, 5, 5, 5, 6};
+        int arr[] = {1, 1, 2};
+//        System.out.println(Arrays.toString(removeDupli.removeDuplicates(arr)));
+        System.out.println(removeDupli.removeDuplicates(arr));
     }
 }

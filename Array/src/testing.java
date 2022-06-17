@@ -5,5 +5,7 @@ public class testing {
         double result = a % 2;
         System.out.println(result);
         System.out.println(a % 2 != 0);
+//        var list = new Prbl4();
+
     }
 }
