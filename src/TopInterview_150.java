@@ -34,11 +34,60 @@ public class TopInterview_150 {
 ////        System.out.println(s.substring(0, 3));
 //        System.out.println(lengthOfLongestSubstring2(s));
 
-        int[] nums1 = {1, 2};
-        int[] nums2 = {3, 4, 5};
-        System.out.println((findMedianSortedArrays(nums1, nums2)));
-//        int n = 5;
-//        System.out.println( ((double)n / 2));
+//        int[] nums1 = {1, 2};
+//        int[] nums2 = {3, 4, 5};
+//        System.out.println((findMedianSortedArrays(nums1, nums2)));
+
+//        int[] nums = {0, 1};
+//        System.out.println(canJump(nums));
+//        System.out.println(minJump(nums));
+
+        int[] citations = {1,3,1};
+        System.out.println(hIndex(citations));
+    }
+    public static int hIndex(int[] citations) {
+        int len = citations.length;
+        int hIndex = 0;
+        int rEle = len - 1;
+        Arrays.sort(citations);
+
+        for (int i = 0; i < len; i++) {
+            if (citations[i] < rEle){
+                rEle--;
+                hIndex++;
+            }
+            else
+                break;
+        }
+        return hIndex;
+    }
+    public static int minJump(int[] nums) {
+        int minJump = 0;
+        int len = nums.length;
+        int desti = len - 1;
+        int trv = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (nums[i] == 0)
+                return minJump;
+            minJump++;
+            for (int j = 1; j <= nums[i]; j++) {
+                trv = i + j;
+                if (trv >= desti)
+                    return minJump;
+            }
+        }
+        return 0;
+    }
+    public static boolean canJump(int[] nums) {
+        int len = nums.length;
+        int desti = len - 1;
+
+        for(int i = len - 2; i >= 0; i--){
+            if(desti <= (i + nums[i]))
+                desti = i;
+        }
+        return desti == 0;
     }
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
         double mid = 0;
