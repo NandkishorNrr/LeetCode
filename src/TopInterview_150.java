@@ -1,7 +1,11 @@
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class TopInterview_150 {
+
+
     public static void main(String[] args) {
         //        int[] nums1 = {0};
 //        int[] nums2 = {1};
@@ -42,8 +46,150 @@ public class TopInterview_150 {
 //        System.out.println(canJump(nums));
 //        System.out.println(minJump(nums));
 
-        int[] citations = {1,3,1};
-        System.out.println(hIndex(citations));
+//        int[] citations = {1,3,1};
+//        System.out.println(hIndex(citations));
+
+//        String s = "123";
+//        var lMaxSbStr = lengthOfLongestSubstring2(s);
+//        System.out.println(lMaxSbStr);
+
+//        String s = "abcde";
+//        String t = "abcdf";
+
+//        System.out.println(t.contains(t));
+//        var ch = findTheDifference(s, t);
+//        System.out.println(ch);
+
+//        String s = "babad";
+//        System.out.println(longestPalindrome(s));
+//        System.out.println(isPalindrome(s));
+
+     /*   int[] nums = {1,2,3};
+        nextPermutation(nums);*/
+//        String[] strs = {"plower","flow","flight"};
+//        String lCommon = longestCommonPrefix(strs);
+//        System.out.println(lCommon);
+
+//        String h = "sadbutsad";
+//        String n = "sad";
+//        System.out.println(h.indexOf("sad"));
+        String s = "A man, a plan, a canal: Panama";
+        var sP = isPalindromeAlp(s);
+        System.out.println(sP);
+
+    }
+
+    public static boolean isPalindromeAlp(String s) {
+        s = s.toLowerCase();
+        String nS = "";
+
+        for(char ch : s.toCharArray()){
+            if(isAlphaNum(ch))
+                nS += ch;
+        }
+        var sArr = nS.toCharArray();
+        int len = sArr.length;
+
+        for(int i = 0; i < len; i++){
+            if(sArr[i] != sArr[len - (1 + i)])
+                return false;
+        }
+        return true;
+    }
+    private static boolean isAlphaNum(char ch){
+       String alphaNum = "abcdefghijklmnopqrstuvwxyz0123456789";
+        return alphaNum.contains(String.valueOf(ch));
+    }
+    public static String longestCommonPrefix(String[] strs) {
+        int len = strs.length;
+        String lCommon = "";
+        int minWord = strs[0].length();
+        for(int i = 1; i < len; i++){
+            if(minWord > strs[i].length())
+                minWord = strs[i].length();
+        }
+        int ptr = 0;
+        char ch;
+        while(ptr < minWord){
+            ch = strs[0].charAt(ptr);
+            for(int i = 1; i < len; i++){
+                if(strs[i].charAt(ptr) != ch){
+                    return lCommon;
+                }
+            }
+            lCommon += ch;
+            ptr++;
+        }
+        return lCommon;
+    }
+
+
+    /*public static void nextPermutation(int[] nums) {
+        int brkP = 0;
+        int len = nums.length;
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] < nums[i - 1]){
+                brkP = i;
+                break;
+            }
+        }
+        int temp = nums[brkP];
+        int tempI = brkP;
+        for(int i =  brkP + 1; i < len; i++){
+            if(temp < nums[i]){
+                tempI = i;
+                break;
+            }
+        }
+        swap(nums, brkP, tempI);
+        Arrays.sort(nums, brkP, len);
+        System.out.println(Arrays.toString(nums));
+    }*/
+    private static void swap(int[] arr, int p, int q){
+        int temp = arr[p];
+        arr[p] = arr[q];
+        arr[q] = temp;
+    }
+    public static String longestPalindrome(String s) {
+        int len = s.length();
+        String[] subStr = new String[len];
+        boolean isPalindrome = false;
+        String temp = "";
+        String mxSubStr = "";
+
+        for (int i = 0; i < len; i++){
+            temp += s.charAt(i);
+            subStr[i] = temp;
+        }
+        for (int j = 0; j < len; j++) {
+            isPalindrome =  isPalindrome(subStr[j]);
+            if (isPalindrome && mxSubStr.length() < subStr[j].length()){
+                mxSubStr = subStr[j];
+            }
+        }
+        return mxSubStr;
+    }
+
+    private static boolean isPalindrome(String s) {
+
+        var charS = s.toCharArray();
+        int len = charS.length;;
+        for (int i = 0; i < len/ 2; i++) {
+            if (charS[i] != charS[len - (1 + i)])
+                return false;
+        }
+        return true;
+    }
+
+    public static char findTheDifference(String s, String t) {
+        char ch = ' ';
+        for (char c: t.toCharArray()) {
+            if (!s.contains(String.valueOf(c))){
+                ch = c;
+                break;
+            }
+        }
+        return ch;
     }
     public static int hIndex(int[] citations) {
         int len = citations.length;
@@ -60,6 +206,29 @@ public class TopInterview_150 {
                 break;
         }
         return hIndex;
+    }
+    public static int lengthOfLongestSubstring2(String s) {
+        int f = 0;
+        int l = 0;
+        int maxL = 0;
+        int len = s.length();
+        Queue<Character> q = new ArrayDeque();
+
+        for (int i = 0; i < len; i++) {
+            if (q.contains(s.charAt(i))){
+                if (maxL < (l - f))
+                    maxL = l - f;
+                while (q.contains(s.charAt(i))) {
+                    q.remove();
+                    f++;
+                }
+            }
+            q.add(s.charAt(i));
+            l++;
+            if (maxL < (l - f))
+                maxL = l - f;
+        }
+        return maxL;
     }
     public static int minJump(int[] nums) {
         int minJump = 0;
@@ -152,7 +321,7 @@ public class TopInterview_150 {
         }
         return arr[len / 2];
     }
-    public static int lengthOfLongestSubstring2(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         String ls = "";
         String ts = "";
 
