@@ -1,12 +1,11 @@
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import javax.print.DocFlavor;
+import java.util.*;
 
 public class TopInterview_150 {
 
 
     public static void main(String[] args) {
+
         //        int[] nums1 = {0};
 //        int[] nums2 = {1};
 //        merge(nums1, 0, nums2, 1);
@@ -73,10 +72,192 @@ public class TopInterview_150 {
 //        String h = "sadbutsad";
 //        String n = "sad";
 //        System.out.println(h.indexOf("sad"));
-        String s = "A man, a plan, a canal: Panama";
-        var sP = isPalindromeAlp(s);
-        System.out.println(sP);
+//        String s = "A man, a plan, a canal: Panama";
+//        var sP = isPalindromeAlp(s);
+//        System.out.println(sP);
 
+//        String s = "acb";
+//        String t = "ahbgdc";
+//        System.out.println(isSubsequence(s, t));
+
+//        String s = "]";
+//        System.out.println(isValid(s));
+
+//        String s1 = "s1";
+//        String s2 = "s1";
+//        System.out.println(s1 == s2);
+
+//        int[] nums = {1,2,3,1,1,3};
+//        System.out.println(numIdenticalPairs2(nums));
+
+//        int n = 19;
+//
+//        System.out.println(isHappy(n));
+//        int[] nums = {2,3,1,2};
+//        canBeIncreasing(nums);
+//        System.out.println(Math.m);
+
+//        int[] nums = {10,4,8,3};
+//        var as = leftRightDifference(nums);
+//        System.out.println(Arrays.toString(as));
+
+        int[] nums = {1,2,3,4,0};
+        int[] index = {0,1,2,3,0};
+        createTargetArray(nums, index);
+    }
+    public static int[] createTargetArray(int[] nums, int[] index) {
+        List<Integer> t = new ArrayList<>();
+        int len = nums.length;
+        int[] tr = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            t.add(index[i], nums[i]);
+        }
+
+        for (int i = 0; i < len; i++) {
+            tr[i] = t.get(i);
+        }
+        return tr;
+    }
+    public static int[] leftRightDifference(int[] nums) {
+        int len = nums.length;
+        int[] rs = new int[len];
+        int[] ls = new int[len];
+        int[] as = new int[len];
+
+        if(len == 0)
+            return as;
+
+        ls[0] = 0;
+        rs[len - 1] = 0;
+        as[0] = Math.abs(ls[0] - rs[0]);
+
+        if(len < 2)
+            return as;
+
+        ls[1] = nums[1];
+        rs[len - 2] = nums[len - 1];
+        as[1] = Math.abs(ls[1] - rs[1]);
+
+        if(len < 3)
+            return as;
+
+
+        for(int i = 0; i < len - 2; i++){
+            ls[i] = nums[i] + nums[i + 1];
+        }
+        for(int i = len - 3; i >= 0; i--){
+            rs[i] = nums[i + 1] + nums[i + 2];
+        }
+
+        for(int i = 0; i < len; i++){
+            as[i] = Math.abs(ls[i] - rs[i]);
+        }
+
+        return as;
+    }
+    public static boolean canBeIncreasing(int[] nums) {
+        int count = 0;
+        var tA = nums;
+        int in = 0;
+        Arrays.sort(tA);
+        for(int i = 0; i < tA.length - 1; i++){
+            if(tA[i] == tA[i + 1])
+                count++;
+            if(nums[i] > nums[i + 1])
+                in = i;
+        }
+        if(count <= 1){
+            for (int i = in; i < nums.length - 1; i++) {
+                nums[i] = nums[i + 1];
+            }
+            for (int i = 1; i < nums.length - 2; i++) {
+                if (nums[i] == nums[i + 1])
+                    return false;
+            }
+        }
+        else
+            return false;
+        return true;
+    }
+    public static boolean isHappy(int n) {
+        int slow = n;
+        int fast = n;
+
+        do{
+            slow = sqr(slow);
+            fast = sqr(sqr(fast));
+        }
+        while (slow != fast);
+
+        if (slow == 1)
+            return true;
+
+        return false;
+    }
+    private static int sqr(int n){
+        int sum = 0;
+        int temp = n;
+        int c;
+        while(temp != 0){
+            c = temp % 10;
+            sum += c*c;
+            temp /= 10 ;
+        }
+        return sum;
+    }
+    public static int numIdenticalPairs(int[] nums) {
+            int count = 0;
+            for(int i = 0; i < nums.length - 1; i++){
+                for(int j = i + 1; j < nums.length; j++){
+                    if(nums[i] == nums[j])
+                        count++;
+                }
+            }
+            return count;
+    }
+    public static int numIdenticalPairs2(int[] nums) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] == nums[j])
+                    hm.put(j, i);
+            }
+        }
+        return hm.size();
+    }
+    public static boolean isValid(String s) {
+        Stack<Character> brackets = new Stack<>();
+        for(char ch : s.toCharArray()){
+            char pop = ' ';
+            if(isOpen(ch)){
+                brackets.push(ch);
+            }
+            else {
+                if(!brackets.isEmpty())
+                    pop = brackets.pop();
+                if(!(ch == ')' && pop == '(' ||
+                        ch == '}' && pop == '{' ||
+                        ch == ']' && pop == '[')
+                ) return false;
+            }
+        }
+        return brackets.isEmpty();
+    }
+    private static boolean isOpen(char ch){
+        String openBrc = "({[";
+        return openBrc.contains(String.valueOf(ch));
+    }
+    public static boolean isSubsequence(String s, String t) {
+        int i=0,j=0;
+        while(i<s.length() && j<t.length())
+        {
+            if(s.charAt(i)==t.charAt(j))
+                i++;
+            j++;
+        }
+        return i==s.length();
     }
 
     public static boolean isPalindromeAlp(String s) {
