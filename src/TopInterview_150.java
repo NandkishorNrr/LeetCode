@@ -106,10 +106,44 @@ public class TopInterview_150 {
 //        createTargetArray(nums, index);
 //        String s = "ceabaacb";
 //        System.out.println(minDeletions(s));
-        int[] nums = {};
-        var a = decompressRLElist(nums);
-        System.out.println(Arrays.toString(a));
 
+//        int[] nums = {};
+//        var a = decompressRLElist(nums);
+//        System.out.println(Arrays.toString(a));
+
+//        int[] digits = {9};
+//        plusOne(digits);
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(fact(i));
+        }
+    }
+
+
+    public static int climbStairs(int n) {
+        int n2 = n / 2;
+        int n1 = n - n / 2;
+        return (fact(n)/(fact(n1)*fact(n - n1)));
+    }
+    private static int fact(int p){
+        if(p == 0)
+            return 1;
+        return p*fact(p - 1);
+    }
+
+    public static int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            if (digits[i] == 9) {
+                digits[i] = 0;
+            } else {
+                digits[i]++;
+                return digits;
+            }
+        }
+
+        int[] newDigits = new int[digits.length + 1];
+        newDigits[0] = 1;
+        return newDigits;
     }
     public static int[] decompressRLElist(int[] nums) {
         List<Integer> l = new ArrayList<>();
