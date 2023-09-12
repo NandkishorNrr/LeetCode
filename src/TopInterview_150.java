@@ -101,10 +101,65 @@ public class TopInterview_150 {
 //        var as = leftRightDifference(nums);
 //        System.out.println(Arrays.toString(as));
 
-        int[] nums = {1,2,3,4,0};
-        int[] index = {0,1,2,3,0};
-        createTargetArray(nums, index);
+//        int[] nums = {1,2,3,4,0};
+//        int[] index = {0,1,2,3,0};
+//        createTargetArray(nums, index);
+//        String s = "ceabaacb";
+//        System.out.println(minDeletions(s));
+        int[] nums = {};
+        var a = decompressRLElist(nums);
+        System.out.println(Arrays.toString(a));
+
     }
+    public static int[] decompressRLElist(int[] nums) {
+        List<Integer> l = new ArrayList<>();
+        int f;
+        int n;
+
+        for(int i = 0; i < nums.length; i++){
+            f = nums[i];
+            n = nums[i + 1];
+            while(f != 0){
+                l.add(n);
+                f--;
+            }
+        }
+        int[] a = new int[l.size()];
+        for (int i = 0; i < l.size(); i++) {
+            a[i] = l.get(i);
+        }
+        return a;
+    }
+    public static int minDeletions(String s) {
+        int[] ca = new int[26];
+        int delC = 0;
+        for(char ch: s.toCharArray())
+            ca[ch - 'a']++;
+
+        Set<Integer> set = new HashSet<>();
+        for(int c : ca){
+            while(set.contains(c) && c > 0){
+                c--;
+                delC++;
+            }
+            set.add(c);
+        }
+
+        return delC;
+    }
+    public String restoreString(String s, int[] indices) {
+        int len = indices.length;
+        char[] sA  = new char[len];
+        for(int i = 0; i < len; i++){
+            sA[indices[i]] = s.charAt(i);
+        }
+        s = "";
+        for (char ch: sA) {
+            s += ch;
+        }
+        return s;
+    }
+
     public static int[] createTargetArray(int[] nums, int[] index) {
         List<Integer> t = new ArrayList<>();
         int len = nums.length;
